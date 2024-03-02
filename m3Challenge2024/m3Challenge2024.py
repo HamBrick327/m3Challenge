@@ -1,21 +1,31 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from pandas import read_csv
 
-points = np.array([(1, 1), (2, 4), (5, 8), (9, 3), (2, 6), (10, 11)])
+file = read_csv("./data.csv", usecols=['Year', 'DeltaUnits'])
+x = file["Year"].tolist()
+print("got ", x, " from datafile",)
 
-## get the x and y
-x = points[:,0]
-y = points[:,1]
+y = file["DeltaUnits"].tolist()
+print("got ", y, "from datafile")
 
-## make the polynomial
+## fix the first element so that the best fit line doesn't freak out
+y.pop(0)
+x.pop(0)
+print(x)
+print(y)
+
+## make the polynomial;
 z = np.polyfit(x, y, 1)
+print("Z:", z)
 f = np.poly1d(z)
+print("f", f)
 
 ## calculate new x's and y's
-# x_new = np.linspace(x[0], x[-1], 50)
 newY = f(x)
 
 ## plot the data to return the image
-plt.plot(x,y,'o', x, newY)
+plt.plot(x,y,'o')
+plt.plot(x, newY)
 plt.xlim([x[0]-1, x[-1] + 1 ])
 plt.show()

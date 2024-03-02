@@ -2,7 +2,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from pandas import read_csv
 
+## import the data into the script
 file = read_csv("./data.csv")
+
+''''''''' MODEL 1 '''''''''
+##### SEATTLE #######
 x = file["Year"].tolist()
 print("got ", x, " from datafile",)
 
@@ -18,6 +22,7 @@ z = np.polyfit(x, y, 1)
 f = np.poly1d(z) ## --> 545.4x - 1.094e+06
 print(f)
 
+## calculate then append the projected numbers to the lists
 x.append(x[-1] + 12)
 x.append(x[-1] + 10)
 x.append(x[-1] + 30)
@@ -36,4 +41,9 @@ print(y)
 plt.plot(x,y,'o')
 plt.plot(x, newY)
 plt.xlim([x[0]-1, x[-1] + 1 ])
-plt.show()
+plt.show() ## <-- pauses here until you close the window
+
+#### ALBUQUERQUE ####
+y = file["NMDeltaUnits"].tolist()
+
+## make sure the script doesn't freak out with the second set of numbers

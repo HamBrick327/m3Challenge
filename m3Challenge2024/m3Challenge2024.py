@@ -13,13 +13,9 @@ print("got ", x, " from datafile",)
 y = file["DeltaUnits"].tolist()
 print("got ", y, "from datafile")
 
-## fix the first element so that the best fit line doesn't freak out
-y.pop(0)
-x.pop(0)
-
 ## make the polynomial;
-z = np.polyfit(x, y, 1)
-f = np.poly1d(z) ## --> 545.4x - 1.094e+06
+z = np.polyfit(x, y, 2)
+f = np.poly1d(z) ## -->
 print(f)
 
 ## calculate then append the projected numbers to the lists
@@ -38,12 +34,37 @@ print(x)
 print(y)
 
 ## plot the data to return the image
-plt.plot(x,y,'o')
-plt.plot(x, newY)
+plt.plot(x,y,'o') ## plot the points at the original funciton
+plt.plot(x, newY) ## plot the new function
 plt.xlim([x[0]-1, x[-1] + 1 ])
-plt.show() ## <-- pauses here until you close the window
+plt.show()
 
 #### ALBUQUERQUE ####
+## reset the variables to re-do all of that for Albuquerque
 y = file["NMDeltaUnits"].tolist()
+x = file["Year"].tolist()
 
-## make sure the script doesn't freak out with the second set of numbers
+
+z = np.polyfit(x, y, 2)
+f = np.poly1d(z)
+print(f)
+
+x.append(x[-1] + 12)
+x.append(x[-1] + 10)
+x.append(x[-1] + 30)
+y.append(f(x[-3]))
+y.append(f(x[-2]))
+y.append(f(x[-1]))
+
+## calculate new y according to x
+newY = f(x)
+
+## display the x and y lists for debugging purposes
+print(x)
+print(y)
+
+## plot data... again
+plt.plot(x, y, 'rx')
+plt.plot(x, newY, 'g')
+plt.xlim([x[0]-1, x[-1] + 1 ])
+plt.show() ## <-- pauses here until you close the window
